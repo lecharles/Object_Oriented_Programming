@@ -1,17 +1,13 @@
 class Rover
   attr_accessor :name
 
-  def initialize(position, direction)
+  def initialize(position, direction) #position [0, 0], direction "N"
     @position = position
     @direction = direction
     # @instruction = instruction
   end
 
-  def read_instruction(instruction) # for now 1 instruction example: M
-    p instruction
-  end
-
-  def move(instruction) # if instruction is M
+  def move(instruction)
     if @direction == "N"
       new_position = @position[1] += 1
     elsif @direction == "E"
@@ -22,7 +18,7 @@ class Rover
       new_position = @position[0] -= 1
     # else p "instruction error"
     end
-    p "New position is [#{@position[0]}, #{@position[1]}]"
+    # p "New position is [#{@position[0]}, #{@position[1]}]"
   end
 
   def turn(instruction)
@@ -38,13 +34,27 @@ class Rover
     elsif ( @direction == "N" ) && ( instruction == "L" )
       @direction = "W"
     elsif ( @direction == "E" ) && ( instruction == "L" )
-      @direction = "S"
+      @direction = "N"
     elsif ( @direction == "S" ) && ( instruction == "L" )
       @direction = "E"
     elsif ( @direction == "W" ) && ( instruction == "L" )
-      @direction = "N"
-      
+      @direction = "S"
+
     end
+  end
+
+  def read_instruction(instruction)
+    instruction_list = instruction.split("")
+
+    instruction_list.each do |element|
+      if ( element == "R" ) || ( element == "L" )
+        turn(element)
+      elsif  element == "M"
+        move(element)
+      end
+
+    end
+
   end
 
 
